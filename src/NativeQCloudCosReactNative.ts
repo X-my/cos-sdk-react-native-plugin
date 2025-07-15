@@ -1,17 +1,47 @@
 import type { TurboModule } from 'react-native';
 import { TurboModuleRegistry } from 'react-native';
-import type { CosXmlServiceConfig, TransferConfig } from './data_model/config';
-import type { SessionQCloudCredentials } from './data_model/credentials';
-import type { DnsMapParameters } from './data_model/parameters';
+
+interface CosXmlServiceConfig {
+  region?: string;
+  connectionTimeout?: number;
+  socketTimeout?: number;
+  isHttps?: boolean;
+  host?: string;
+  hostFormat?: string;
+  port?: number;
+  isDebuggable?: boolean;
+  signInUrl?: boolean;
+  userAgent?: string;
+  dnsCache?: boolean;
+  accelerate?: boolean;
+  domainSwitch?: boolean;
+}
+
+interface TransferConfig {
+  divisionForUpload?: number;
+  sliceSizeForUpload?: number;
+  forceSimpleUpload?: boolean;
+  enableVerification?: boolean;
+}
+
+interface DnsMapParameters {
+  domain: string;
+  ips: Array<string>;
+}
+
+interface SessionQCloudCredentials {
+  tmpSecretId: string;
+  tmpSecretKey: string;
+  sessionToken: string;
+  startTime?: number;
+  expiredTime: number
+}
 
 export interface Spec extends TurboModule {
-  initWithPlainSecret(secretId: string, secretKey: string): Promise<void>;
-  initWithSessionCredentialCallback(): Promise<void>;
-  initWithScopeLimitCredentialCallback(): Promise<void>;
+  init(config: CosXmlServiceConfig, transferConfig: TransferConfig, bucketAZConfig: string): Promise<void>;
   updateSessionCredential(credential: SessionQCloudCredentials, stsScopesArrayJson: string | null): void;
   initCustomerDNS(dnsMap: Array<DnsMapParameters>): Promise<void>;
   initCustomerDNSFetch(): Promise<void>;
-  setDNSFetchIps(domain: string, ips: Array<string> | null): void;
   forceInvalidationCredential(): Promise<void>;
   setCloseBeacon(isCloseBeacon: boolean): Promise<void>;
   registerDefaultService(config: CosXmlServiceConfig): Promise<void>;
