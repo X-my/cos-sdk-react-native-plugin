@@ -161,5 +161,13 @@
         }
       ]
     ]
+  },
+  "codegenConfig": {
+    "name": "QCloudCosReactNativeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.cosreactnative"
+    }
   }
 }

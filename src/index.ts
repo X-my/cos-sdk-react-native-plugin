@@ -15,16 +15,18 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
-const QCloudCosReactNative = NativeModules.QCloudCosReactNative
-  ? NativeModules.QCloudCosReactNative
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
+// const QCloudCosReactNative = NativeModules.QCloudCosReactNative
+//   ? NativeModules.QCloudCosReactNative
+//   : new Proxy(
+//       {},
+//       {
+//         get() {
+//           throw new Error(LINKING_ERROR);
+//         },
+//       }
+//     );
+
+const QCloudCosReactNative = require('./NativeQCloudCosReactNative').default;
 
 const CosEventEmitter = NativeModules.CosEventEmitter
 ? NativeModules.CosEventEmitter
